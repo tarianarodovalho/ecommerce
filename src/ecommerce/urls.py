@@ -17,18 +17,33 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
+
+""" from products.views import (
+    ProductListView, 
+    ProductDetailView, 
+    ProductFeaturedListView, 
+    ProductFeaturedDetailView,
+    ProductDetailSlugView,
+) """
 
 from .views import home_page, contact_page, about_page, login_page, register_page
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_page),
-    path('sobre/', about_page),
-    path('contato/', contact_page),
+    path('about/', about_page),
+    path('contact/', contact_page),
     path('login/', login_page),
     path('register/', register_page),
+    path('products/', include('products.urls')),
+    #path('products/', ProductListView.as_view()),
+    #path('featured/', ProductFeaturedListView.as_view()),
+    #path('products/<int:pk>/', ProductDetailView.as_view()),
+    #path('featured/<int:pk>/', ProductFeaturedDetailView.as_view()),
+    #path('products/<str:slug>/', ProductDetailSlugView.as_view()),
 ]
+
 
 if settings.DEBUG:
     urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
